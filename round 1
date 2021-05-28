@@ -1,0 +1,38 @@
+pool = [
+  "Pat_Wong",
+  "Kelley",
+  "Sanjay",
+  "Anne",
+  "jacqueline",
+  "Michelle_Abramowski",
+  "Arash_Namvar",
+  "Aika",
+  "Catherine",
+  "Kovach",
+  "Lu",
+  "Andrew_Koprowski",
+  "Tom_Weber",
+  "Charlie_Kottler",
+  "rohin",
+  "Farooq_Ahmed",
+  "Melanie_Williams",
+  "Rickey"
+]
+party_size = 3
+rounds_count = 8
+rounds = []
+def deal(cards, hand_size)
+  cards.shuffle.each_slice(hand_size).map(&:sort)
+end
+def deal_uniq(cards, hand_size, prev_deals)
+  out = deal(cards, hand_size)
+  while prev_deals && (prev_deals.flatten(1) & out).any?
+    out = deal(cards, hand_size)
+  end
+  out
+end
+rounds << deal_uniq(pool, party_size, rounds) while rounds.length < rounds_count
+rounds.each.with_index do |round, i|
+  puts "\nSession #{i + 1}"
+  round.each { |x| p x }
+end
